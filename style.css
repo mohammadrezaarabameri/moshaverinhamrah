@@ -166,28 +166,37 @@ hr {
 }
 .services-category{
     display: flex;
-    justify-content: space-around;
-    text-align: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
 }
 .categories{
-    width: 15%;
-    background: #ffffff;
-    padding: 10px;
-    border-radius: 10px;
+    flex: 1 1 calc(20% - 16px); 
+    box-sizing: border-box; 
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    min-width: 200px;
     box-shadow: 3px 3px 3px #eeeeee;
+    padding: 10px;
 }
 .categories img{
     width: 50%;
+    height: 50%;
     border-radius: 50%;
     border: 2px solid #eeeeee;
 }
 .categories h3{
-    line-height: 0.5;
+    line-height: 1.5;
+    margin: 8px 0;
 }
 .categories p{
     font-weight: bold;
     color: #696868;
     font-size: 15px;
+    margin: 0;
 }
 .baner{
     background: linear-gradient(to right, #6e2664, #38e238);

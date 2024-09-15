@@ -12,13 +12,76 @@ document.getElementById('menu-icon').addEventListener('click', function() {
 
   //فراخوانی تعداد مشاوره موفق
 
-  fetch('http://9099071515.ir/crm/untitled/get_count_call.php')
-.then(response => response.json())
+fetch('http://9099071515.ir/crm/untitled/get_count_call.php')
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
 .then(data => {
-    const successfulCalls = data['COUNT(*)'];
+    const successfulCalls = data['COUNT(*)'] || 0;
 
     document.getElementById('successful-calls').textContent = `${parseInt(successfulCalls).toLocaleString('fa-IR')}+`;
 })
 .catch(error => {
     console.error('Error fetching data:', error);
 });
+
+//فراخوانی تعداد مشاوران
+
+fetch('http://9099071515.ir/crm/untitled/get_count_consultants.php')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const numberConsultan = data['COUNT(*)'] || 0;
+        const consultantElements = document.getElementsByClassName('number-consultant');
+
+        Array.from(consultantElements).forEach(element => {
+            element.textContent = `${parseInt(numberConsultan).toLocaleString('fa-IR')}+ مشاور`;
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+
+// فراخوانی دپارتمان های مشاوره
+
+    fetch('http://9099071515.ir/crm/untitled/get_all_expertise.php')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const container = document.getElementById('categories-container');
+        
+        data.forEach(expertise => {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.classList.add('categories');
+            
+            const img = document.createElement('img');
+            img.src = `http://9099071515.ir/crm/${expertise.pic}`;
+            img.alt = expertise.name;
+
+            const h3 = document.createElement('h3');
+            h3.textContent = expertise.name;
+
+            const p = document.createElement('p');
+            p.textContent = `50+ متخصص`;
+
+            categoryDiv.appendChild(img);
+            categoryDiv.appendChild(h3);
+            categoryDiv.appendChild(p);
+
+            container.appendChild(categoryDiv);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
