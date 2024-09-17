@@ -89,3 +89,99 @@ fetch('http://9099071515.ir/crm/untitled/get_count_consultants.php')
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+
+
+//فراخوانی نظرات کاربران
+
+fetch('http://9099071515.ir/crm/untitled/get_all_comments.php')
+.then(response => response.json())
+.then(data => {
+    const filteredComments = data.filter(comment => 
+        comment.name && comment.matn && comment.date && comment.owner_name && comment.owner_pic && comment.owner_departeman
+    );
+    
+    function createCommentItem(comment) {
+        const commentItem = document.createElement('div');
+        commentItem.classList.add('comment-item');
+        
+
+        const userQuestionDiv = document.createElement('div');
+        userQuestionDiv.classList.add('user-question');
+        
+        const userImg = document.createElement('img');
+        userImg.src = './images/person_13924070.png';
+        userQuestionDiv.appendChild(userImg);
+        
+        const userInfoDiv = document.createElement('div');
+        userInfoDiv.classList.add('user-info');
+        
+        const userNameLink = document.createElement('a');
+        userNameLink.href = '#';
+        userNameLink.textContent = comment.name;
+        
+        const userDateSpan = document.createElement('span');
+        userDateSpan.textContent = comment.date;
+        
+        userInfoDiv.appendChild(userNameLink);
+        userInfoDiv.appendChild(userDateSpan);
+        
+        userQuestionDiv.appendChild(userInfoDiv);
+        
+        const userComment = document.createElement('p');
+        userComment.textContent = comment.matn;
+        
+        const adminAnswerDiv = document.createElement('div');
+        adminAnswerDiv.classList.add('admin-answer');
+        
+        const adminImg = document.createElement('img');
+        adminImg.src = `http://9099071515.ir/crm/${comment.owner_pic}`;
+        adminAnswerDiv.appendChild(adminImg);
+        
+        const answerInfoDiv = document.createElement('div');
+        answerInfoDiv.classList.add('answer-info');
+        
+        const answerNameLink = document.createElement('a');
+        answerNameLink.href = '#';
+        
+        const answerNameH3 = document.createElement('h3');
+        answerNameH3.textContent = comment.owner_name;
+        
+        const answerDepartemanP = document.createElement('p');
+        answerDepartemanP.textContent = `مشاور ${comment.owner_departeman}`;
+        
+        answerNameLink.appendChild(answerNameH3);
+        answerNameLink.appendChild(answerDepartemanP);
+        answerInfoDiv.appendChild(answerNameLink);
+        adminAnswerDiv.appendChild(answerInfoDiv);
+        
+        commentItem.appendChild(userQuestionDiv);
+        commentItem.appendChild(userComment);
+        commentItem.appendChild(document.createElement('hr'));
+        commentItem.appendChild(adminAnswerDiv);
+        
+        return commentItem;
+    }
+
+
+    function displayComments(startIndex) {
+        const commentsContainer = document.getElementById('comments-container');
+        commentsContainer.innerHTML = '';
+        
+        const endIndex = startIndex + 3;
+        const commentsToShow = filteredComments.slice(startIndex, endIndex);
+        
+        commentsToShow.forEach(comment => {
+            const commentItem = createCommentItem(comment);
+            commentsContainer.appendChild(commentItem);
+        });
+    }
+
+    let currentIndex = 0;
+    displayComments(currentIndex);
+    
+    setInterval(() => {
+        currentIndex = (currentIndex + 3) % filteredComments.length;
+        displayComments(currentIndex);
+    }, 3000);
+})
+.catch(error => console.error('Error fetching comments:', error));

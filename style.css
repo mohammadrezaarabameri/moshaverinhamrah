@@ -384,6 +384,8 @@ hr {
 .admin-answer img{
     width: 75px;
     height: 75px;
+    border-radius: 50%;
+    margin-left: 5px;
 }
 .answer-info a{
     text-decoration: none;
@@ -392,7 +394,7 @@ hr {
     font-size: 17px;
     margin-top: 0;
     line-height: 1;
-    color: #2d2d2d;
+    color: #6e2664;
 }
 .answer-info p{
     font-size: 14px;
