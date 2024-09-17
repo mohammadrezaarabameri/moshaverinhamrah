@@ -65,18 +65,22 @@ fetch('http://9099071515.ir/crm/untitled/get_count_consultants.php')
             const categoryDiv = document.createElement('div');
             categoryDiv.classList.add('categories');
             
+            const link = document.createElement('a');
+            link.href = expertise.link;
+
             const img = document.createElement('img');
             img.src = `http://9099071515.ir/crm/${expertise.pic}`;
             img.alt = expertise.name;
+            link.appendChild(img);
 
             const h3 = document.createElement('h3');
             h3.textContent = expertise.name;
+            link.appendChild(h3);
+
+            categoryDiv.appendChild(link);
 
             const p = document.createElement('p');
             p.textContent = `50+ متخصص`;
-
-            categoryDiv.appendChild(img);
-            categoryDiv.appendChild(h3);
             categoryDiv.appendChild(p);
 
             container.appendChild(categoryDiv);

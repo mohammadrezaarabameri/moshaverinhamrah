@@ -182,20 +182,25 @@ hr {
     box-shadow: 3px 3px 3px #eeeeee;
     padding: 10px;
 }
-.categories img{
+.categories a{
+    text-decoration: none;
+}
+.categories a img{
     width: 50%;
     height: 50%;
     border-radius: 50%;
     border: 2px solid #eeeeee;
 }
-.categories h3{
+.categories a h3{
     line-height: 1.5;
     margin: 8px 0;
+    color: #242424;
+    font-size: 15px;
 }
 .categories p{
     font-weight: bold;
     color: #696868;
-    font-size: 15px;
+    font-size: 13px;
     margin: 0;
 }
 .baner{
